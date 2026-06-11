@@ -1,271 +1,380 @@
-// Main.jsx
-
 import { useState } from "react"
 import axios from "axios"
+import "./Main.css"
 
-function Main() {
+axios.defaults.withCredentials = true
 
-    const [view, setview] = useState("signup")
-    const [issignup, setissignup] = useState(false)
+function Main({ onLogin }) {
+  const [view, setView] = useState("login")
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState(null)
 
-    async function handleSignupSubmit(e, data) {
+  /* ─────────────────────────────
+     SIGNUP
+  ───────────────────────────── */
 
-        e.preventDefault()
+  async function handleSignupSubmit(e, data) {
+    e.preventDefault()
 
-        try {
+    setLoading(true)
+    setMessage(null)
 
-            const response = await axios.post(
-                "http://localhost:3000/signup",
-                data
-            )
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/signup",
+        data
+      )
 
-            console.log(response.data)
+      console.log("Signup:", response.data)
 
-            alert("Signup successful")
+      setMessage({
+        type: "success",
+        text: "Account created successfully. Please login.",
+      })
 
-            setissignup(true)
+      setView("login")
+    } catch (err) {
+      console.log(err)
 
-            setview("login")
-
-        } catch (err) {
-
-            console.log(err)
-
-            alert("Signup failed")
-        }
+      setMessage({
+        type: "error",
+        text:
+          err?.response?.data?.message ||
+          "Signup failed. Please try again.",
+      })
+    } finally {
+      setLoading(false)
     }
+  }
 
-    function handleLoginSubmit(e, data) {
+  /* ─────────────────────────────
+     LOGIN
+  ───────────────────────────── */
 
-        e.preventDefault()
+  async function handleLoginSubmit(e, data) {
+    e.preventDefault()
 
-        if (!issignup) {
+    setLoading(true)
+    setMessage(null)
 
-            alert("You must sign up first!")
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/login",
+        data
+      )
 
-            setview("signup")
+      console.log("Login:", response.data)
 
-            return
-        }
+      setMessage({
+        type: "success",
+        text: "Logged in successfully.",
+      })
 
-        console.log("Login Data:", data)
+      onLogin(response.data.user)
+    } catch (err) {
+      console.log(err)
 
-        alert("Logged in successfully")
+      setMessage({
+        type: "error",
+        text:
+          err?.response?.data?.message ||
+          "Invalid email or password.",
+      })
+    } finally {
+      setLoading(false)
     }
+  }
 
-    return (
+  function switchView(nextView) {
+    setMessage(null)
+    setView(nextView)
+  }
 
-        <div>
+  return (
+    <div className="auth-page">
+      {/* BACKGROUND */}
 
-            {
-                view === "signup" ? (
+      <div className="auth-bg"></div>
+      <div className="auth-bg-overlay"></div>
+      <div className="auth-vignette"></div>
 
-                    <div>
+      {/* AUTH CARD */}
 
-                        <h2>Create an Account</h2>
+      <main
+        className={`auth-card ${
+          view === "signup" ? "auth-card--signup" : ""
+        }`}
+      >
+        <AuthBrand />
 
-                        <Signup onSubmit={handleSignupSubmit} />
+        {view === "login" ? (
+          <>
+            <section className="auth-heading-block">
+              <h1 className="auth-title">
+                WELCOME BACK
+              </h1>
 
-                        <p>
+              <p className="auth-subtitle">
+                Login to track your carbon journey
+              </p>
+            </section>
 
-                            Already have an account?
+            {message && (
+              <div className={`auth-message ${message.type}`}>
+                {message.text}
+              </div>
+            )}
 
-                            <button onClick={() => setview("login")}>
-                                Login
-                            </button>
+            <LoginForm
+              onSubmit={handleLoginSubmit}
+              loading={loading}
+            />
 
-                        </p>
+            <p className="auth-switch">
+              Don&apos;t have an account?{" "}
+              <button
+                type="button"
+                className="auth-switch-btn"
+                onClick={() => switchView("signup")}
+              >
+                Register here
+              </button>
+            </p>
+          </>
+        ) : (
+          <>
+            <section className="auth-heading-block">
+              <h1 className="auth-title">
+                CREATE ACCOUNT
+              </h1>
 
-                    </div>
+              <p className="auth-subtitle">
+                Sign up to start tracking your carbon journey
+              </p>
+            </section>
 
-                ) : (
+            {message && (
+              <div className={`auth-message ${message.type}`}>
+                {message.text}
+              </div>
+            )}
 
-                    <div>
+            <SignupForm
+              onSubmit={handleSignupSubmit}
+              loading={loading}
+            />
 
-                        <h2>Login Page</h2>
-
-                        <Login onSubmit={handleLoginSubmit} />
-
-                        <p>
-
-                            No Account? Signup then
-
-                            <button onClick={() => setview("signup")}>
-                                Signup
-                            </button>
-
-                        </p>
-
-                    </div>
-                )
-            }
-
-        </div>
-    )
+            <p className="auth-switch">
+              Already have an account?{" "}
+              <button
+                type="button"
+                className="auth-switch-btn"
+                onClick={() => switchView("login")}
+              >
+                Login here
+              </button>
+            </p>
+          </>
+        )}
+      </main>
+    </div>
+  )
 }
 
-function Signup({ onSubmit }) {
+/* ─────────────────────────────
+   BRAND
+───────────────────────────── */
 
-    const [formData, setFormData] = useState({
-        first_name: "",
-        last_name: "",
-        email: "",
-        password: ""
-    })
+function AuthBrand() {
+  return (
+    <div className="auth-brand">
+      <div className="auth-energy-logo">
+        <svg
+          viewBox="0 0 64 64"
+          className="auth-energy-svg"
+          aria-hidden="true"
+        >
+          <path
+            d="M34 4L13 35h17l-4 25 25-35H34l5-21z"
+            className="auth-bolt"
+          />
 
-    function handleChange(e) {
+          <path
+            d="M39 43c8-10 17-9 20-8-1 8-6 17-17 17-5 0-8-3-9-4 2 0 4-1 6-5z"
+            className="auth-leaf"
+          />
+        </svg>
+      </div>
 
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        })
-    }
-
-    return (
-
-        <form onSubmit={(e) => onSubmit(e, formData)}>
-
-            <div>
-
-                <label htmlFor="first_name">
-                    First Name
-                </label>
-
-                <input
-                    type="text"
-                    placeholder="Enter your first name"
-                    id="first_name"
-                    name="first_name"
-                    value={formData.first_name}
-                    onChange={handleChange}
-                    required
-                />
-
-            </div>
-
-            <div>
-
-                <label htmlFor="last_name">
-                    Last Name
-                </label>
-
-                <input
-                    type="text"
-                    placeholder="Enter your last name"
-                    id="last_name"
-                    name="last_name"
-                    value={formData.last_name}
-                    onChange={handleChange}
-                    required
-                />
-
-            </div>
-
-            <div>
-
-                <label htmlFor="email">
-                    Email ID
-                </label>
-
-                <input
-                    type="email"
-                    placeholder="Enter email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
-
-            </div>
-
-            <div>
-
-                <label htmlFor="password">
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    placeholder="Enter password"
-                    id="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                />
-
-            </div>
-
-            <button type="submit">
-                Signup
-            </button>
-
-        </form>
-    )
+      <span className="auth-brand-text">
+        CARBONTRACKER
+      </span>
+    </div>
+  )
 }
 
-function Login({ onSubmit }) {
+/* ─────────────────────────────
+   SIGNUP FORM
+───────────────────────────── */
 
-    const [formData, setFormData] = useState({
-        email: "",
-        password: ""
+function SignupForm({ onSubmit, loading }) {
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+  })
+
+  function handleChange(e) {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     })
+  }
 
-    function handleChange(e) {
+  return (
+    <form
+      className="auth-form"
+      onSubmit={(e) => onSubmit(e, formData)}
+    >
+      <div className="auth-field">
+        <label className="auth-label">
+          FIRST NAME
+        </label>
 
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        })
-    }
+        <input
+          className="auth-input"
+          type="text"
+          name="first_name"
+          value={formData.first_name}
+          onChange={handleChange}
+          autoComplete="given-name"
+          required
+        />
+      </div>
 
-    return (
+      <div className="auth-field">
+        <label className="auth-label">
+          LAST NAME
+        </label>
 
-        <form onSubmit={(e) => onSubmit(e, formData)}>
+        <input
+          className="auth-input"
+          type="text"
+          name="last_name"
+          value={formData.last_name}
+          onChange={handleChange}
+          autoComplete="family-name"
+          required
+        />
+      </div>
 
-            <div>
+      <div className="auth-field">
+        <label className="auth-label">
+          EMAIL
+        </label>
 
-                <label htmlFor="email">
-                    Email ID
-                </label>
+        <input
+          className="auth-input"
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          autoComplete="email"
+          required
+        />
+      </div>
 
-                <input
-                    type="email"
-                    placeholder="Enter email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
+      <div className="auth-field">
+        <label className="auth-label">
+          PASSWORD
+        </label>
 
-            </div>
+        <input
+          className="auth-input"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          autoComplete="new-password"
+          required
+        />
+      </div>
 
-            <div>
+      <button
+        className="auth-submit-btn"
+        type="submit"
+        disabled={loading}
+      >
+        {loading ? "CREATING..." : "SIGN UP"}
+      </button>
+    </form>
+  )
+}
 
-                <label htmlFor="password">
-                    Password
-                </label>
+/* ─────────────────────────────
+   LOGIN FORM
+───────────────────────────── */
 
-                <input
-                    type="password"
-                    placeholder="Enter password"
-                    id="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                />
+function LoginForm({ onSubmit, loading }) {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  })
 
-            </div>
+  function handleChange(e) {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
+  }
 
-            <button type="submit">
-                Login
-            </button>
+  return (
+    <form
+      className="auth-form"
+      onSubmit={(e) => onSubmit(e, formData)}
+    >
+      <div className="auth-field">
+        <label className="auth-label">
+          EMAIL
+        </label>
 
-        </form>
-    )
+        <input
+          className="auth-input"
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          autoComplete="email"
+          required
+        />
+      </div>
+
+      <div className="auth-field">
+        <label className="auth-label">
+          PASSWORD
+        </label>
+
+        <input
+          className="auth-input"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          autoComplete="current-password"
+          required
+        />
+      </div>
+
+      <button
+        className="auth-submit-btn"
+        type="submit"
+        disabled={loading}
+      >
+        {loading ? "SIGNING IN..." : "LOGIN"}
+      </button>
+    </form>
+  )
 }
 
 export default Main

@@ -1,0 +1,95 @@
+.notify {
+  position: relative;
+  margin-right: 24px;
+}
+
+.notify-bell {
+  position: relative;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+}
+
+.notify-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #c0392b;
+  color: white;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  font-weight: 700;
+}
+
+.notify-dropdown {
+  position: absolute;
+  right: 0;
+  top: 42px;
+  width: 340px;
+  max-height: 420px;
+  overflow-y: auto;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+  z-index: 1000;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+.notify-header {
+  padding: 16px;
+  border-bottom: 1px solid #222;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.notify-empty {
+  padding: 28px;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
+
+.notify-item {
+  padding: 16px;
+  border-bottom: 1px solid #1e1e1e;
+  cursor: pointer;
+  transition: 0.2s;
+  background: #181818;
+}
+
+.notify-item:hover {
+  background: #202020;
+}
+
+.notify-read {
+  opacity: 0.6;
+}
+
+.notify-title {
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.notify-message {
+  color: #cfcfcf;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.notify-time {
+  margin-top: 10px;
+  color: #777;
+  font-size: 11px;
+}

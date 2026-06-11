@@ -1,0 +1,516 @@
+/* ============================================================
+   Navbar.css — Carbon Tracker Premium Navbar
+   ============================================================ */
+
+.main-nav {
+  height: 82px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+
+  padding: 0 34px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(12, 32, 21, 0.96),
+      rgba(22, 58, 36, 0.94),
+      rgba(13, 35, 24, 0.96)
+    );
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.18),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+
+  backdrop-filter: blur(18px);
+}
+
+/* ============================================================
+   LOGO
+   ============================================================ */
+
+.main-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.main-logo-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 15px;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      #a6f2a7,
+      #5c8c5a 48%,
+      #193d27 100%
+    );
+
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.16),
+    0 12px 24px rgba(92, 140, 90, 0.28);
+}
+
+.main-logo-mark span {
+  width: 18px;
+  height: 18px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-35deg);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: inset 0 -3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.main-logo-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+}
+
+.main-logo {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+.main-logo-subtitle {
+  color: rgba(226, 244, 226, 0.62);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* BADGE BESIDE LOGO */
+
+.main-user-badge {
+  width: fit-content;
+  margin-top: 5px;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 5px 9px;
+
+  border-radius: 999px;
+  background: rgba(142, 219, 150, 0.14);
+  border: 1px solid rgba(142, 219, 150, 0.22);
+  color: #dfffe1;
+}
+
+.main-user-badge span {
+  font-size: 13px;
+}
+
+.main-user-badge strong {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   CENTER LINKS
+   ============================================================ */
+
+.main-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  list-style: none;
+  padding: 7px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.075);
+}
+
+.main-links li {
+  display: flex;
+}
+
+.main-link {
+  position: relative;
+
+  min-height: 38px;
+  padding: 0 15px;
+
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+
+  transition: 0.22s ease;
+}
+
+.main-link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.main-link.active {
+  color: #102116;
+  background: linear-gradient(135deg, #ffffff, #dff4df);
+
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.16),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.46);
+}
+
+/* ============================================================
+   RIGHT SIDE
+   ============================================================ */
+
+.main-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+/* THEME TOGGLE */
+
+.theme-toggle {
+  width: 42px;
+  height: 42px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+
+  cursor: pointer;
+
+  transition: 0.22s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+}
+
+.theme-toggle-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+/* ACCOUNT */
+
+.main-account {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-height: 48px;
+  padding: 8px 8px 8px 16px;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.075);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.main-account-info {
+  max-width: 190px;
+}
+
+.main-account-label {
+  color: rgba(226, 244, 226, 0.56);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  margin-bottom: 3px;
+}
+
+.main-account-email {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+
+  max-width: 185px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* DROPDOWN */
+
+.main-dropdown-wrap {
+  position: relative;
+}
+
+.main-dropdown-btn {
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+
+  cursor: pointer;
+
+  font-size: 18px;
+  line-height: 1;
+
+  transition: 0.22s ease;
+}
+
+.main-dropdown-btn:hover,
+.main-dropdown-btn.open {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.main-dropdown-menu {
+  position: absolute;
+  top: 48px;
+  right: 0;
+
+  width: 250px;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(16, 33, 22, 0.1);
+
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.32);
+
+  backdrop-filter: blur(18px);
+
+  animation: navbarDropdownIn 0.18s ease;
+}
+
+.main-dropdown-header {
+  padding: 16px;
+
+  border-bottom: 1px solid rgba(16, 33, 22, 0.08);
+}
+
+.main-dropdown-header span {
+  display: block;
+  color: #607567;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.main-dropdown-header strong {
+  display: block;
+  color: #102116;
+  font-size: 13px;
+  word-break: break-word;
+}
+
+.main-dropdown-menu button {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 14px 16px;
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  color: #102116;
+  font-size: 14px;
+  font-weight: 850;
+
+  transition: 0.2s ease;
+}
+
+.main-dropdown-menu button:hover {
+  background: #eef6ee;
+}
+
+.main-dropdown-logout span {
+  color: #c0392b;
+}
+
+@keyframes navbarDropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+
+body.dark-mode .main-nav {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 11, 8, 0.97),
+      rgba(10, 26, 16, 0.96),
+      rgba(5, 12, 8, 0.97)
+    );
+
+  border-bottom-color: rgba(142, 219, 150, 0.12);
+}
+
+body.dark-mode .main-links {
+  background: rgba(142, 219, 150, 0.05);
+  border-color: rgba(142, 219, 150, 0.09);
+}
+
+body.dark-mode .main-link.active {
+  color: #07130d;
+  background: linear-gradient(135deg, #b7f1bd, #8edb96);
+}
+
+body.dark-mode .main-account,
+body.dark-mode .theme-toggle {
+  background: rgba(142, 219, 150, 0.07);
+  border-color: rgba(142, 219, 150, 0.12);
+}
+
+body.dark-mode .main-dropdown-menu {
+  background: rgba(10, 28, 18, 0.96);
+  border-color: rgba(142, 219, 150, 0.16);
+}
+
+body.dark-mode .main-dropdown-header {
+  border-bottom-color: rgba(142, 219, 150, 0.12);
+}
+
+body.dark-mode .main-dropdown-header span {
+  color: rgba(242, 247, 241, 0.58);
+}
+
+body.dark-mode .main-dropdown-header strong,
+body.dark-mode .main-dropdown-menu button {
+  color: #f2f7f1;
+}
+
+body.dark-mode .main-dropdown-menu button:hover {
+  background: rgba(142, 219, 150, 0.08);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1150px) {
+  .main-nav {
+    height: auto;
+    min-height: 82px;
+    flex-wrap: wrap;
+    padding: 18px 24px;
+  }
+
+  .main-links {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .main-nav {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .main-logo {
+    font-size: 19px;
+  }
+
+  .main-logo-subtitle {
+    display: none;
+  }
+
+  .main-right {
+    margin-left: auto;
+  }
+
+  .main-account-info {
+    display: none;
+  }
+
+  .main-account {
+    padding: 6px;
+  }
+
+  .main-links {
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .main-link {
+    min-height: 36px;
+    padding: 0 12px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-logo-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 13px;
+  }
+
+  .main-dropdown-menu {
+    right: -6px;
+    width: 230px;
+  }
+
+  .theme-toggle {
+    width: 38px;
+    height: 38px;
+  }
+}
